@@ -1,0 +1,53 @@
+﻿@page
+@model BBankTestTask.Views.ProductsModel
+@{
+    ViewData["Products"] = "Products";
+    ViewData["Categories"] = "Categories";
+}
+<div id="controlsDiv">
+    <div id="filterDiv">
+        <label for="categorySelector">Фильтр</label>
+        <select id="categorySelector" class="border-dark" onchange="showHideProductsRows()">
+            <option value="Все">Все</option>
+            @foreach (var item in Model.Categories)
+            {
+                <option value="@item.CategoryName">@item.CategoryName</option>
+            }
+        </select>
+    </div>
+
+    <div id="searchDiv">
+        <label for="searchInput">Поиск</label>
+        <input id="searchInput" type="text" size="12" oninput="searchProducts()" />
+    </div>
+</div>
+<hr />
+<table class="table sortable table-bordered text-center" name="products-table">
+    <thead>
+        <tr>
+            <th>Номер</th>
+            <th>Наименование продукта</th>
+            <th>Категория</th>
+            <th>Описание</th>
+            <th>Стоимость в рублях</th>
+            <th>Примечание общее</th>
+            <th>Примечание специальное</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Products)
+        {
+            <tr class="@Html.Raw(@item.CategoryName) Все">
+                <td>
+                    <a asp-page="/EditProduct" asp-route-id="@item.ProductId" >@item.ProductId</a>   
+                </td>
+                <td>@item.ProductName</td>
+                <td>@item.CategoryName</td>
+                <td>@item.ProductDescription</td>
+                <td>@item.ProductPrice</td>
+                <td>@item.ProductGenaralNote</td>
+                <td>@item.ProductSpeciallNote</td>
+            </tr>
+        }
+    </tbody>
+</table>
